@@ -6,6 +6,7 @@ import time
 import cv2
 import numpy as np
 import csv
+import cv2.face
 from PIL import Image, ImageTk
 from random import randint
 from only_morse import Morse
@@ -120,9 +121,10 @@ def training():
          Ids.append(Id)        
       return faces,Ids
    #recognizer=cv2.face.LBPHFaceRecognizer_create()
-   recognizer=cv2.face_LBPHFaceRecognizer.create()
+   #recognizer=cv2.face_LBPHFaceRecognizer.create()
+   recognizer = cv2.face.LBPHFaceRecognizer_create()
    #recognizer = cv2.createLBPHFaceRecognizer()
-   harcascadePath = "haarcascade_frontalface_default.xml"
+   harcascadePath = "C:\Users\Dell\Desktop\New_morsecode\morse_code\haarcascade_frontalface_default.xml"
    detector =cv2.CascadeClassifier(harcascadePath)
    faces,Id = getImagesAndLabels("datasets")
    recognizer.train(faces, np.array(Id))
@@ -135,12 +137,11 @@ def training():
 def recognition():
    con = sqlite3.connect('userinfo.db')
    cr = con.cursor()
-   #recognizer=cv2.face.LBPHFaceRecognizer_create()
-  # recognizer=cv2.face_LBPHFaceRecognizer.create()
-   #recognizer = cv2.createLBPHFaceRecognizer()
    recognizer = cv2.face.LBPHFaceRecognizer_create()
-   recognizer.read("Trainner.yml")
-   harcascadePath = "haarcascade_frontalface_default.xml"
+   #recognizer=cv2.face.EigenFaceRecognizer.create()
+  
+   recognizer.read("C:\Users\Dell\Desktop\New_morsecode\morse_code\Trainner.yml")
+   harcascadePath = "C:\Users\Dell\Desktop\New_morsecode\morse_code\haarcascade_frontalface_default.xml"
    faceCascade = cv2.CascadeClassifier(harcascadePath);    
    cam = cv2.VideoCapture(0)
    font = cv2.FONT_HERSHEY_SIMPLEX        
